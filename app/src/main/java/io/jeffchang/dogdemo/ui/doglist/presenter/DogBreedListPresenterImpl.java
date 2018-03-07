@@ -27,6 +27,6 @@ public class DogBreedListPresenterImpl implements DogBreedListPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((dogListResponse) -> {
                     dogBreedListView.onDogBreedListSuccess(dogListResponse);
-                });
+                }, (error -> dogBreedListView.onDogBreedListFailure(error) ));
     }
 }

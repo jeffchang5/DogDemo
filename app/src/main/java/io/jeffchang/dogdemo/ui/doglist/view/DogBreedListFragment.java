@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ import io.jeffchang.dogdemo.network.local.FlatDogListItem;
 import io.jeffchang.dogdemo.ui.common.BaseFragment;
 import io.jeffchang.dogdemo.ui.common.LineItemDecoration;
 import io.jeffchang.dogdemo.ui.doglist.presenter.DogBreedListPresenter;
-import timber.log.Timber;
+import retrofit2.HttpException;
 
 import javax.inject.Inject;
 
@@ -70,8 +70,22 @@ public class DogBreedListFragment extends BaseFragment implements DogBreedListVi
     }
 
     @Override
-    public void onDogBreedListFailure() {
-
+    public void onDogBreedListFailure(Throwable error) {
+        if (error instanceof HttpException) {
+            if (((HttpException) error).code() == 401) {
+                Toast.makeText(getContext(), "Unauthorized", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Unknown error", Toast.LENGTH_LONG).show();
+                }
+            }
+        else if (error instanceof UnknownHostException) {
+            showErrorView(
+                    R.drawable.ic_cloud_off_black_24dp,
+                    getString(R.string.no_internet_connection), () -> {
+                            showProgressBar(getString(R.string.loading_dog_breeds));
+                            dogBreedListPresenter.getDogBreedList();
+                    });
+        }
     }
 
     private ArrayList<FlatDogListItem> convertToFlatMap(Map<String, List<String>> dogBreeds) {
@@ -91,7 +105,6 @@ public class DogBreedListFragment extends BaseFragment implements DogBreedListVi
                                         subcategories.get(i),
                                         SUB_BREED_TYPE,
                                         true));
-                        Timber.e("true %s", flatDogListItem.get(i).getValue());
                     }
                     else {
                         flatDogListItem.add(
@@ -99,7 +112,6 @@ public class DogBreedListFragment extends BaseFragment implements DogBreedListVi
                                         subcategories.get(i),
                                         SUB_BREED_TYPE,
                                         false));
-                        Timber.e("false %s", flatDogListItem.get(i).getValue());
                     }
 
                 }

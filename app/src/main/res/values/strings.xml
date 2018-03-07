@@ -3,4 +3,6 @@
     <string name="disconnected">Disconnected</string>
     <string name="device_offline">Device Offline</string>
     <string name="try_again">Try Again</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="loading_dog_breeds">Loading Dog Breeds</string>
 </resources>

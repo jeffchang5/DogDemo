@@ -10,5 +10,5 @@ public interface DogBreedListView {
 
     void onDogBreedListSuccess(DogListResponse dogListResponse);
 
-    void onDogBreedListFailure();
+    void onDogBreedListFailure(Throwable error);
 }

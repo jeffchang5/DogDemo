@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,19 +63,27 @@ public abstract class BaseFragment extends DaggerFragment {
 
     public void showProgressBar(String loadingText) {
         mainView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
         progressBarView.setLoadingText(loadingText);
         progressBarView.setVisibility(View.VISIBLE);
+
     }
 
     public void showMainContent() {
         progressBarView.setVisibility(View.GONE);
         mainView.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
     }
 
-    public void showErrorView(int error, Runnable runnable) {
-        runnable.run();
+    public void showErrorView(int drawable,
+                              String errorText,
+                              Runnable runnable) {
         progressBarView.setVisibility(View.GONE);
         mainView.setVisibility(View.GONE);
         errorView.setVisibility(View.VISIBLE);
+        errorView.setTitleText(errorText);
+        errorView.setTryAgainCallback(runnable);
+        if (getContext() != null)
+            errorView.setIconDrawable(ContextCompat.getDrawable(getContext(), drawable));
     }
 }
