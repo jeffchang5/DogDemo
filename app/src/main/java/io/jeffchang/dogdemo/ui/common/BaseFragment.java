@@ -38,30 +38,40 @@ public abstract class BaseFragment extends DaggerFragment {
         if (context != null) {
             parentView = new FrameLayout(context);
             parentView.setLayoutParams(params);
+
             progressBarView = new ProgressBarView(context);
             progressBarView.setLayoutParams(params);
+            progressBarView.setVisibility(View.GONE);
+            parentView.addView(progressBarView);
+
             errorView = new ErrorView(context);
             errorView.setLayoutParams(params);
+            errorView.setVisibility(View.GONE);
+            parentView.addView(errorView);
+
             mainView = inflater.inflate(setLayoutResourceID(), container, false);
-            parentView.setLayoutParams(params);
+            parentView.addView(mainView);
         }
 
         return parentView;
-
     }
 
-    void showProgressBar(String loadingText) {
+    public <T extends View> T findParentViewById(int resId) {
+        return mainView.findViewById(resId);
+    }
+
+    public void showProgressBar(String loadingText) {
         mainView.setVisibility(View.GONE);
         progressBarView.setLoadingText(loadingText);
         progressBarView.setVisibility(View.VISIBLE);
     }
 
-    void showMainContent() {
+    public void showMainContent() {
         progressBarView.setVisibility(View.GONE);
         mainView.setVisibility(View.VISIBLE);
     }
 
-    void showErrorView(int error, Runnable runnable) {
+    public void showErrorView(int error, Runnable runnable) {
         runnable.run();
         progressBarView.setVisibility(View.GONE);
         mainView.setVisibility(View.GONE);

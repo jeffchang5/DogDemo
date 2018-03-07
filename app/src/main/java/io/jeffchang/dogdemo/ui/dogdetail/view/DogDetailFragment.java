@@ -16,6 +16,13 @@ import io.jeffchang.dogdemo.R;
 
 public class DogDetailFragment extends Fragment implements DogDetailView {
 
+    public static DogDetailFragment newInstance() {
+        Bundle args = new Bundle();
+        DogDetailFragment fragment = new DogDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

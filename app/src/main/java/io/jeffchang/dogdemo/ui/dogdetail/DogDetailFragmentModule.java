@@ -7,10 +7,6 @@ import io.jeffchang.dogdemo.ui.dogdetail.presenter.DogDetailPresenter;
 import io.jeffchang.dogdemo.ui.dogdetail.presenter.DogDetailPresenterImpl;
 import io.jeffchang.dogdemo.ui.dogdetail.view.DogDetailFragment;
 import io.jeffchang.dogdemo.ui.dogdetail.view.DogDetailView;
-import io.jeffchang.dogdemo.ui.doglist.presenter.DogListPresenter;
-import io.jeffchang.dogdemo.ui.doglist.presenter.DogListPresenterImpl;
-import io.jeffchang.dogdemo.ui.doglist.view.DogBreedListFragment;
-import io.jeffchang.dogdemo.ui.doglist.view.DogBreedListView;
 
 /**
  * Provides dependencies for map fragment module.
